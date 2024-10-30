@@ -1,6 +1,6 @@
-let dsaStudents = [];
-let plStudents = [];
-let networksStudents = [];
+let dsaStudents = DSA;
+let plStudents = PL;
+let networksStudents = Networks;
 
 function enrollStudent(subjectArray, studentName) {
   subjectArray.push(studentName);
