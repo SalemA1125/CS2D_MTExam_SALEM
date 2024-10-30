@@ -1,83 +1,85 @@
-let dsaStudents = DSA;
-let plStudents = PL;
-let networksStudents = Networks;
+// Arrays to store the enrolled students for each subject
+let DSA = [];
+let PL = [];
+let Networks = [];
 
-function enrollStudent(subjectArray, studentName) {
-  subjectArray.push(studentName);
-  console.log(`${studentName} enrolled in ${subjectArray.name}`);
-}
-
-function unenrollStudent(subjectArray, studentName) {
-  let index = subjectArray.indexOf(studentName);
-  if (index > -1) {
-    subjectArray.splice(index, 1);
-    console.log(`${studentName} unenrolled from ${subjectArray.name}`);
-  } else {
-    console.log(`${studentName} not found in ${subjectArray.name}`);
-  }
-}
-
-function displayStudents(subjectArray) {
-  console.log(`Students in ${subjectArray.name}: ${subjectArray.join(", ")}`);
-}
-
-
-//Main program loop
-dsaStudents.name = "DSA";
-plStudents.name = "PL";
-networksStudents.name = "Networks";
-
-let subjectChoice;
-let operationChoice;
-let studentName;
-
-do {
-  subjectChoice = prompt("Select subject:\n(A) DSA\n(B) PL\n(C) Networks");
-  if (subjectChoice) {
-    let selectedArray;
-    switch (subjectChoice.toUpperCase()) {
-      case "A":
-        selectedArray = dsaStudents;
-        break;
-      case "B":
-        selectedArray = plStudents;
-        break;
-      case "C":
-        selectedArray = networksStudents;
-        break;
-      default:
-        console.log("Invalid subject choice.");
-        continue; //Go back to the beginning of the loop
-    }
-
-    operationChoice = prompt("Select operation:\n(A) Enroll\n(B) Unenroll\n(C) Select Another Subject\n(D) Exit");
-
-    if (operationChoice) {
-      switch (operationChoice.toUpperCase()) {
+// Function to prompt the user for subject selection
+function selectSubject() {
+    const subjectChoice = prompt("Select a subject:\n(A) DSA\n(B) PL\n(C) Networks");
+    switch(subjectChoice) {
         case "A":
-          studentName = prompt("DSA:");
-          enrollStudent(selectedArray, studentName);
-          break;
+            operations(DSA, "DSA");
+            break;
         case "B":
-          studentName = prompt("PL:");
-          unenrollStudent(selectedArray, studentName);
-          break;
+            operations(PL, "PL");
+            break;
         case "C":
-          //No action needed, loop will continue to subject selection
-          break;
-        case "D":
-          //Exit the loop
-          break;
+            operations(Networks, "Networks");
+            break;
         default:
-          console.log("Invalid operation choice.");
-      }
+            console.log("Invalid choice. Please try again.");
+            selectSubject();
     }
-  }
-} while (operationChoice.toUpperCase() !== "D");
+}
 
+// Function to handle operations (Enroll, Unenroll, etc.)
+function operations(subjectArray, subjectName) {
+    const operationChoice = prompt(`Select an operation for ${subjectName}:\n(A) Enroll\n(B) Unenroll\n(C) Select Another Subject\n(D) Exit`);
+    
+    switch(operationChoice) {
+        case "A":
+            enrollStudent(subjectArray, subjectName);
+            break;
+        case "B":
+            unenrollStudent(subjectArray, subjectName);
+            break;
+        case "C":
+            selectSubject();
+            break;
+        case "D":
+            exitProgram();
+            break;
+        default:
+            console.log("Invalid choice. Please try again.");
+            operations(subjectArray, subjectName);
+    }
+}
 
-//Print the final list of students in each subject
-console.log("\nFinal Student Lists:");
-displayStudents(dsaStudents);
-displayStudents(plStudents);
-displayStudents(networksStudents);
+// Function to enroll a student in the selected subject
+function enrollStudent(subjectArray, subjectName) {
+    const studentName = prompt(`Enter the name of the student to enroll in ${subjectName}:`);
+    subjectArray.push(studentName);
+    console.log(`${studentName} has been enrolled in ${subjectName}.`);
+    operations(subjectArray, subjectName);
+}
+
+// Function to unenroll a student from the selected subject
+function unenrollStudent(subjectArray, subjectName) {
+    if (subjectArray.length === 0) {
+        console.log(`No students currently enrolled in ${subjectName}.`);
+    } else {
+        console.log(`Currently enrolled students in ${subjectName}: ${subjectArray.join(", ")}`);
+        const studentName = prompt(`Enter the name of the student to unenroll from ${subjectName}:`);
+        
+        const index = subjectArray.indexOf(studentName);
+        if (index !== -1) {
+            subjectArray.splice(index, 1); // Removing the student from the array
+            console.log(`${studentName} has been unenrolled from ${subjectName}.`);
+        } else {
+            console.log(`${studentName} is not enrolled in ${subjectName}.`);
+        }
+    }
+    operations(subjectArray, subjectName);
+}
+
+// Function to exit the program and print all enrolled students
+function exitProgram() {
+    console.log("Exiting the program...");
+    console.log("Enrolled students per subject:");
+    console.log(`DSA: ${DSA.join(", ")}`);
+    console.log(`PL: ${PL.join(", ")}`);
+    console.log(`Networks: ${Networks.join(", ")}`);
+}
+
+// Start the program by selecting a subject
+selectSubject();
