@@ -1,20 +1,22 @@
-// Create an array to store the colors the user likes
-let favoriteColors = [];
+let favColors = [];
 
-// Function to prompt the user to add their favorite colors
-function addFavoriteColors() {
-    // Loop to get 3 colors from the user
-    while (favoriteColors.length < 3) {
-        // Prompt the user to enter a color
-        let color = prompt("Blue:");
-        
-        // Add the new color to the array
-        favoriteColors.push(color);
-
-        // Print the updated array to the console
-        console.log("Blue:", favoriteColors);
-    }
+// Get initial three colors
+for (let i = 0; i < 3; i++) {
+  let color = prompt(`Enter your favorite color ${i + 1}:`);
+  favColors.push(color);
+  console.log(`Current favorite colors: ${favColors}`);
 }
 
-// Call the function to start collecting colors
-addFavoriteColors();
+// Add more colors until the user is done
+while (true) {
+  let addMore = prompt("Add another favorite color? (yes/no)");
+  if (addMore.toLowerCase() === "yes") {
+    let newColor = prompt("Enter a new favorite color:");
+    favColors.push(newColor);
+    console.log(`Current favorite colors: ${favColors}`);
+  } else {
+    break;
+  }
+}
+
+console.log("Final list of favorite colors:", favColors);
