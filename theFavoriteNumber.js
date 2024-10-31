@@ -1,26 +1,24 @@
-// Declare a variable to hold the favorite number
-let theFavNumber = 11; // You can set this to any favorite number
+let favNumber = Math.floor(Math.random() * 100) + 1; // Generates a random number between 1 and 100
+let guess;
+let guessCount = 0;
 
-// Function to prompt the user until they guess correctly
-function guessFavoriteNumber() {
-    let guess;
-    // Loop until the user guesses the correct number
-    while (guess !== theFavNumber) {
-        // Prompt the user to input their guess
-        guess = parseInt(prompt("Guess the favorite number:"), 25);
+console.log("Welcome to the Number Guessing Game!");
 
-        // Check if the guess is too high, too low, or correct
-        if (guess < theFavNumber) {
-            console.log("Your guess is too low.");
-        } else if (guess > theFavNumber) {
-            console.log("Your guess is too high.");
-        } else if (guess === theFavNumber) {
-            console.log("Correct! You've guessed the favorite number.");
-        } else {
-            console.log("Invalid input. Please enter a number.");
-        }
-    }
+while (true) {
+  guess = parseInt(prompt("Guess a number between 1 and 100:"));
+  guessCount++;
+
+  if (isNaN(guess)) {
+    console.log("Invalid input. Please enter a number.");
+    continue; // Go back to the beginning of the loop
+  }
+
+  if (guess < favNumber) {
+    console.log("Too low! Try again.");
+  } else if (guess > favNumber) {
+    console.log("Too high! Try again.");
+  } else {
+    console.log(`Congratulations! You guessed the number in ${guessCount} tries.`);
+    break; // Exit the loop
+  }
 }
-
-// Call the function to start the guessing game
-guessFavoriteNumber();
