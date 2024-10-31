@@ -1,93 +1,43 @@
-// The arrays for each subject 
-let DSA = [];
-let PL = [];
-let Networks = [];
+// Initialize an array to store the subject values
+let sub = ["DSA", "PL", "Networks"];
 
-// I don't know if I'm gonna use a function here or not, so I didn't and just used loop and switch cases
+// Prompt the user to select a subject
+let subject = prompt("Select a subject:\nA. DSA\nB. PL\nC. Networks");
 
-while (true) {
-    let subject = prompt(`Choose a subject: \n (A) DSA \n (B) PL \n (C) Networks`).toUpperCase();
-    let operation = prompt(`Choose what to do: \n (A) Enroll \n (B) Unenroll \n (C) Select Another Subject \n (D) Exit`).toUpperCase();
+// Prompt the user to select an action
+let userAction = prompt("Select:\nEnroll\nUnenroll\nSelect Another Subject\nExit");
 
-    switch (operation) {
-        case "A": // Enroll
-            switch (subject) {
-                case "A":
-                    DSA.push(prompt(`Enter Student Name:`));
-                    break;
-                case "B":
-                    PL.push(prompt(`Enter Student Name:`));
-                    break;
-                case "C":
-                    Networks.push(prompt(`Enter Student Name:`));
-                    break;
-                default:
-                    console.log("Invalid subject choice.");
-            }
-            continue;
+// Prompt the user to enter their name
+let name = prompt("Enter your name:");
 
-        case "B": // Unenroll, I also legit searched how to removed an element in an array using a user prompt cuz I really don't know how 
-            switch (subject) {
-                case "A":
-                    if (DSA.length === 0) {
-                        console.log("No students to unenroll in DSA.");
-                    } else {
-                        let nameToRemove = prompt(`Enter the name to unenroll:\nCurrent students: ${DSA.join(", ")}`);
-                        let index = DSA.indexOf(nameToRemove);
-                        if (index !== -1) {
-                            DSA.splice(index, 1);
-                            console.log(`${nameToRemove} has been unenrolled from DSA.`);
-                        } else {
-                            console.log("Student not found.");
-                        }
-                    }
-                    break;
+// Conditionally handle user action
+if (userAction === "Enroll") {
+    // Add the user's name to the array if they choose "Enroll"
+    sub.push(name);
+} else if (userAction === "Unenroll") {
+    // Remove the last enrolled user if they choose "Unenroll"
+    sub.pop();
+} else if (userAction === "Select Another Subject") {
+    // Prompt the user to re-select a subject if they choose "Select Another Subject"
+    subject = prompt("Select a subject:\nA. DSA\nB. PL\nC. Networks");
+} else if (userAction === "Exit") {
+    // Exit the program if they choose "Exit"
+    console.log("Exiting the program.");
+} else {
+    console.log("Invalid action selected.");
+}
 
-                case "B":
-                    if (PL.length === 0) {
-                        console.log("No students to unenroll in PL.");
-                    } else {
-                        let nameToRemove = prompt(`Enter the name to unenroll:\nCurrent students: ${PL.join(", ")}`);
-                        let index = PL.indexOf(nameToRemove);
-                        if (index !== -1) {
-                            PL.splice(index, 1);
-                            console.log(`${nameToRemove} has been unenrolled from PL.`);
-                        } else {
-                            ("Student not found.");
-                        }
-                    }
-                    break;
+// Log the current state of the array
+console.log("Current subjects and enrolled users:", sub);
 
-                case "C":
-                    if (Networks.length === 0) {
-                        console.log("No students to unenroll in Networks.");
-                    } else {
-                        let nameToRemove = prompt(`Enter the name to unenroll:\nCurrent students: ${Networks.join(", ")}`);
-                        let index = Networks.indexOf(nameToRemove);
-                        if (index !== -1) {
-                            Networks.splice(index, 1);
-                            console.log(`${nameToRemove} has been unenrolled from Networks.`);
-                        } else {
-                            console.log("Student not found.");
-                        }
-                    }
-                    break;
+// Example unenroll name to be added at the beginning
+let unenroll = "Jhury-Ann Bordios";
 
-                default:
-                    console.log("Invalid subject.");
-            }
-            continue;
+// Add unenroll name to the beginning of the array
+sub.unshift(unenroll);
 
-        case "C":
-            continue;
+// Log the updated array
+console.log("Array after adding unenroll name at the beginning:", sub);
 
-        case "D":
-            console.log("DSA:", DSA);
-            console.log("PL:", PL);
-            console.log("Networks:", Networks);
-            break;
-
-        default:
-            console.log("Invalid operation.");
-    }
-    break;
+// Display the first four items in the array
+console.log("First four items in the array:", sub.slice(0, 4));
